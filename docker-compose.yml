@@ -1,0 +1,35 @@
+version: '3.7'
+
+services: 
+  smart-brain-api:
+    container_name: backend
+    # image: node:carbon
+    build: ./
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgres
+      REDIS_URI: redis://redis:6379
+    command: npm start
+    working_dir: /usr/src/smart-brain-api
+    ports: 
+      - "3000:3000"
+    #volumes:
+      #- ./:/usr/src/smart-brain-api
+
+  postgres:
+    environment:
+      - POSTGRES_USER:'postgres'
+      - POSTGRES_PASSWORD:''
+      - POSTGRES_DB:'postgres'
+      - POSTGRES_HOST:'postgres'
+    build: ./postgres
+    ports: 
+      - "5431:5432"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    
